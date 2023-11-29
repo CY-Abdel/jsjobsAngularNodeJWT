@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 // Importez l'opérateur map depuis 'rxjs/operators'.
 import { map } from 'rxjs/operators';
+import { JobService } from '../services/job.service';
 
 
 @Component({
@@ -14,24 +15,20 @@ export class JobListComponent implements OnInit {
 
   // Déclarez une propriété jobs pour stocker les données
   jobs: any = [];
+  err : string = "";
 
-  // Déclarez le constructeur du composant et injectez le service HttpClient.
-  constructor(private http: HttpClient) { }
+  constructor(private jobService: JobService) { }
 
   // Implémentez la méthode ngOnInit de l'interface OnInit
   ngOnInit() {
-    this.http.get('data/jobs.json')
-      // Utilisez l'opérateur pipe pour combiner des opérations RxJS.
-      .pipe(
-        // Utilisez l'opérateur map pour traiter les données de la réponse.
-        map(
-          (res: any) => {
-            console.log(res);
-            this.jobs = res;
-          })
-      )
-      // Abonnez-vous à l'observable résultant de la requête HTTP.
-      .subscribe();
+    this.jobService.getJobs()
+      .subscribe({
+        next: data => {
+          this.jobs = data;
+          console.log('Data received:', data);
+        },
+        error: err => console.error('Observable emitted an error: ' + err)
+      });
   }
 }
 
