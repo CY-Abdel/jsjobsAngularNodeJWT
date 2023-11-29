@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-// Assurez-vous que le module Http est importé
-// import { Http } from '@angular/http';
+
+// Importez l'opérateur map depuis 'rxjs/operators'.
 import { map } from 'rxjs/operators';
 
 
@@ -10,96 +10,28 @@ import { map } from 'rxjs/operators';
   templateUrl: './job-list.component.html',
   styleUrl: './job-list.component.css'
 })
-export class JobListComponent {
+export class JobListComponent implements OnInit {
 
-  // Spécifiez le type comme un tableau d'objets quelconques (any)
-  // jobs = []; // Assurez-vous de déclarer le type approprié pour votre objet JSON
-  datas = [
-    {
-      "id": 1,
-      "title": "Développeur JavaScript",
-      "company": "AT Sure",
-      "city": "Rennes",
-      "zipcode": 35000,
-      "description": "Arrogance Technology est une société à taille humaine, leader sur le marché, nous cherchons un développeur Front connaissant TOUS les frameworks y compris ceux qui ne sont pas encore sortis. Si vous parlez Anglais, Allemand et Espagnol et avez des notions de Mandarin, c'est un plus.",
-      "contract": "CDI",
-      "salary": 25000,
-      "currency": "euros",
-      "startdate": "ASAP",
-      "experience": "junior",
-      "status": "cadre",
-      "area": "pas de déplacement",
-      "field": "aéronautique",
-      "publishdate": "02/17/2017",
-      "lastupdate": "05/01/2017"
-    },
-    {
-      "id": 2,
-      "title": "Développeur Fullstack",
-      "company": "c-noo-les-meilleurs",
-      "city": "St Malo",
-      "zipcode": 35400,
-      "description": "Vous maitrisez Angular, Node et MongoDB : ne cherchez plus, c'est nous les vrais leaders sur le marché. Vous souhaitez intégrer une société qui saura vous faire grandir techniquement et humainement, ne cherchez plus (bis) : ça n'existe pas ! (attends t'es sûr qu'on peut le dire). Pour info, nous ne cherchons pas vraiment, c'est juste pour donner l'impression à nos concurrents que nous sommes en très forte croissance.",
-      "contract": "CDI",
-      "salary": 45000,
-      "currency": "euros",
-      "startdate": "ASAP",
-      "experience": "senior",
-      "status": "employé",
-      "area": "national",
-      "field": "édition",
-      "publishdate": "06/04/2017",
-      "lastupdate": "06/04/2017"
-    },
-    {
-      "id": 3,
-      "title": "Développeur Angular",
-      "company": "SHT",
-      "city": "Nantes",
-      "zipcode": 44000,
-      "description": "Steak Haché Technologie cherche son expert pas cher : chez nous, le minimum c'est déjà trop. Alors envoie ton CV et tes prétentions, mais surtout le CV.",
-      "contract": "CDI",
-      "salary": 0,
-      "currency": "euros",
-      "startdate": "ASAP",
-      "experience": "junior",
-      "status": "stagiaire",
-      "area": "europe",
-      "field": "secteur d'avenir",
-      "publishdate": "05/07/2017",
-      "lastupdate": "06/04/2017"
-    },
-    {
-      "id": 3,
-      "title": "Développeur Angular",
-      "company": "Palindrome",
-      "city": "Laval",
-      "zipcode": 53000,
-      "description": "'Engage le jeu que je le gagne' : c'est ce que tu pourras déclarer si tu maîtrises React, Redux et Node. Si en plus tu sais réparer un 'radar nu' et que tu habites sur 'un roc cornu', le poste est fait pour toi. On a déménagé à Laval pour aller au bout de notre obsession. Pas de babyfoot chez nous : on fait ... du Kayak :)",
-      "contract": "CDI",
-      "salary": 0,
-      "currency": "euros",
-      "startdate": "09/01/2017",
-      "experience": "senior",
-      "status": "cadre",
-      "area": "Ouest",
-      "field": "le monde du livre",
-      "publishdate": "06/02/2017",
-      "lastupdate": "06/02/2017"
-    }
-  ]
+  // Déclarez une propriété jobs pour stocker les données
+  jobs: any = [];
 
+  // Déclarez le constructeur du composant et injectez le service HttpClient.
   constructor(private http: HttpClient) { }
 
-  /**
-   * Lorsque vous utilisez HttpClient, 
-   * l'objet renvoyé par la méthode get est déjà désérialisé si la réponse est JSON. *
-   * Ainsi, 
-   * vous pouvez accéder directement aux propriétés de l'objet data sans avoir besoin d'appeler .json().
-   */
-  // ngOnInit() {
-
-  // }
-
-
+  // Implémentez la méthode ngOnInit de l'interface OnInit
+  ngOnInit() {
+    this.http.get('data/jobs.json')
+      // Utilisez l'opérateur pipe pour combiner des opérations RxJS.
+      .pipe(
+        // Utilisez l'opérateur map pour traiter les données de la réponse.
+        map(
+          (res: any) => {
+            console.log(res);
+            this.jobs = res;
+          })
+      )
+      // Abonnez-vous à l'observable résultant de la requête HTTP.
+      .subscribe();
+  }
 }
+
