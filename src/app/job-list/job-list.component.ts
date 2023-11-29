@@ -15,7 +15,7 @@ export class JobListComponent implements OnInit {
 
   // Déclarez une propriété jobs pour stocker les données
   jobs: any = [];
-  err : string = "";
+  err: string = "";
 
   constructor(private jobService: JobService) { }
 
@@ -27,7 +27,10 @@ export class JobListComponent implements OnInit {
           this.jobs = data;
           console.log('Data received:', data);
         },
-        error: err => console.error('Observable emitted an error: ' + err)
+        error: error => {
+          this.err = error;
+          console.error('Observable emitted an error: ' + error)
+        }
       });
   }
 }
