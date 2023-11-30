@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms'
+import { JobService } from '../services/job.service';
 
 @Component({
   selector: 'app-job-add-form',
@@ -7,8 +8,6 @@ import { FormBuilder, FormGroup } from '@angular/forms'
   styleUrl: './job-add-form.component.css'
 })
 export class JobAddFormComponent implements OnInit {
-
-  form!: FormGroup;
 
   // menu deroulant
   contratTypes = [
@@ -45,7 +44,9 @@ export class JobAddFormComponent implements OnInit {
     { id: 4, name: 'déplacements internationaux', value: 'international' }
   ];
 
-  constructor(private formBuilder: FormBuilder) { }
+  form!: FormGroup;
+
+  constructor(private formBuilder: FormBuilder, private jobService: JobService) { }
 
 
   ngOnInit(): void {
@@ -53,7 +54,7 @@ export class JobAddFormComponent implements OnInit {
       "id": -1,
       "title": "",
       "company": "",
-      "city": "",
+      "city": "", 
       "zipcode": 35,
       "description": "",
       "contract": "",
@@ -69,8 +70,8 @@ export class JobAddFormComponent implements OnInit {
     });
   }
 
-  createJob() {
-    console.log(this.form.value);
+  createJob(jobData : any) {
+    this.jobService.addJob(jobData);
   }
 
 }

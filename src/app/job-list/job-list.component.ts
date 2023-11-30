@@ -25,13 +25,20 @@ export class JobListComponent implements OnInit {
       .subscribe({
         next: data => {
           this.jobs = data;
-          console.log('Data received:', data);
+          // console.log('Data received:', data);
         },
         error: error => {
           this.err = error;
-          console.error('Observable emitted an error: ' + error)
+          // console.error('Observable emitted an error: ' + error)
         }
       });
+
+    this.jobService.JobsSubject.subscribe({
+      next : data => {
+        console.log(data);
+        this.jobs = [data, ...this.jobs];
+      }
+    })
   }
 }
 

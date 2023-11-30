@@ -1,6 +1,6 @@
 <!-- form -->
 <div class="panel-body">
-  <form [formGroup]="form" (ngSubmit)="createJob()">
+  <form [formGroup]="form" (ngSubmit)="createJob(form.value)">
 
     <div class="row">
       <div class="form-group col-sm-6">
@@ -32,7 +32,7 @@
     <!-- // menu deroulant Contrat -->
     <div class="form-group col-sm-6">
       <label for="contract">Contrat</label><br>
-      <select name="contract" formControlName="contract" id="contract">
+      <select name="contract" id="contract" formControlName="contract" id="contract">
         <option *ngFor="let ct of contratTypes" [value]="ct.name">
           {{ ct.name }}
         </option>
@@ -54,13 +54,14 @@
     <!-- Experience -->
     <div class="form-group col-sm-12">
       <label for="experience" style="margin-right: 5px;">expérience</label>
-      <select name="experience" formControlName="experience">
+      <select name="experience" id="experience"
+      formControlName="experience">
         <option *ngFor="let exp of experience" [value]="exp.value">{{exp.name}}</option>
       </select>
 
       <!-- statut -->
       <label for="status" style="margin:0 5px;">statut</label>
-      <select name="status" formControlName="status">
+      <select name="status" id="status" formControlName="status">
         <option *ngFor="let status of statuses" [value]="status.value">{{status.name}}</option>
       </select>
     </div>
@@ -76,10 +77,14 @@
         <label [for]='"btn-" + area.value'>{{ area.name }}</label>
       </div>
     </div>
-
-
-
     <br>
+
+    <div class="form-group col-sm-12">
+      <label for="startdate" style="margin-right: 5px;">date de démarrage</label>
+      <input type="date" name="startdate" id="startdate" formControlName="startdate">
+    </div>
+    <br>
+
     <div class="form-group col-sm-12">
       <button type="submit" class="btn btn-success">Créer une annonce</button>
     </div>

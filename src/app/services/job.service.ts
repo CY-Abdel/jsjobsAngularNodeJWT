@@ -2,11 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JobService {
+
+  jobs: any = [];
+  JobsSubject = new Subject();
 
   constructor(private http: HttpClient) { }
 
@@ -34,5 +38,10 @@ export class JobService {
   //   // Abonnez-vous à l'observable résultant de la requête HTTP.
   //   // .subscribe();
   // }
+
+  addJob(jobData : any) {
+    jobData.id = Date.now();
+    return this.JobsSubject.next(jobData);
+  }
 
 }
