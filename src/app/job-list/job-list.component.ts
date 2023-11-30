@@ -33,12 +33,13 @@ export class JobListComponent implements OnInit {
         }
       });
 
-    this.jobService.JobsSubject.subscribe({
-      next : data => {
-        console.log(data);
-        this.jobs = [data, ...this.jobs];
-      }
-    })
+    this.jobService.JobsSubject
+      .subscribe({
+        next: data => {
+          console.log(data);
+          this.jobs = [data, ...this.jobs];
+        }
+      })
   }
 }
 
