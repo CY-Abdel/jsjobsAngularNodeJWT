@@ -1,0 +1,11 @@
+.small-text {
+  width: 106px;
+  height: 26px;
+  margin: 10px auto;
+}
+
+.currency {
+  margin-left: 5px;
+  height: 26px;
+  width: 139px;
+}

@@ -3,7 +3,6 @@
   <form [formGroup]="form" (ngSubmit)="createJob()">
 
     <div class="row">
-
       <div class="form-group col-sm-6">
         <label for="title">Titre</label>
         <input type="text" id="title" name="title" class="form-control" placeholder="titre de votre annoce"
@@ -22,22 +21,63 @@
           formControlName="zipcode">
       </div>
 
+      <!-- // Description -->
       <div class="form-group col-sm-6">
         <label for="description">Description</label>
         <br>
         <textarea name="description" formControlName="description" id="description" cols="30" rows="10"></textarea>
       </div>
-
-      <div class="form-group col-sm-6">
-        <label for="contract">Contrat</label><br>
-        <select name="contract" formControlName="contract" id="contract">
-          <option *ngFor="let ct of contratTypes" [value]="ct.name">
-            {{ ct.name }}
-          </option>
-        </select>
-      </div>
-
     </div>
+
+    <!-- // menu deroulant Contrat -->
+    <div class="form-group col-sm-6">
+      <label for="contract">Contrat</label><br>
+      <select name="contract" formControlName="contract" id="contract">
+        <option *ngFor="let ct of contratTypes" [value]="ct.name">
+          {{ ct.name }}
+        </option>
+      </select>
+    </div>
+    <br>
+
+
+    <!-- //salaire & Monnaie -->
+    <div class="form-group col-sm-12">
+      <!-- <label for="salary">Salaire</label> -->
+      <input type="number" name="salary" id="salary" class="small-text" placeholder="salaire" formControlName="salary">
+
+      <select class="currency" name="currency" name="currency" formControlName="currency">
+        <option *ngFor="let curr of currencies" [value]="curr.value">{{ curr.name }}</option>
+      </select>
+    </div>
+
+    <!-- Experience -->
+    <div class="form-group col-sm-12">
+      <label for="experience" style="margin-right: 5px;">expérience</label>
+      <select name="experience" formControlName="experience">
+        <option *ngFor="let exp of experience" [value]="exp.value">{{exp.name}}</option>
+      </select>
+
+      <!-- statut -->
+      <label for="status" style="margin:0 5px;">statut</label>
+      <select name="status" formControlName="status">
+        <option *ngFor="let status of statuses" [value]="status.value">{{status.name}}</option>
+      </select>
+    </div>
+
+    <br>
+    <!-- radio -->
+    <div class="form-group col-sm-12">
+      <label for="area">Déplacement</label>
+
+      <div *ngFor="let area of areas">
+        <input type="radio" name="area" [id]='"btn-" + area.value' [value]="area.value" formControlName="area">
+
+        <label [for]='"btn-" + area.value'>{{ area.name }}</label>
+      </div>
+    </div>
+
+
 
     <br>
     <div class="form-group col-sm-12">
