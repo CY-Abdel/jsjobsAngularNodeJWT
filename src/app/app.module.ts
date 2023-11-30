@@ -9,13 +9,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { JobService } from './services/job.service';
 import { JobAddFormComponent } from './job-add-form/job-add-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DaysAgoPipe } from './pipes/days-ago.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
     JobListComponent,
-    JobAddFormComponent
+    JobAddFormComponent,
+    DaysAgoPipe
   ],
   imports: [
     BrowserModule,
