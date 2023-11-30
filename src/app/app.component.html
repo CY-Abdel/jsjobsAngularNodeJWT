@@ -1,10 +1,41 @@
-<!-- router outler -->
-<h1>{{ title }}</h1>
+<!-- <h1>{{ title }}</h1> -->
+<!-- 
+  <app-job-add-form></app-job-add-form>
+  <app-search></app-search>
+  <app-job-list></app-job-list> 
+-->
 
-<!-- <app-job-add-form></app-job-add-form>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">
+      <img class="logo" src="../assets/images/logo.jpg">
+    </a>
 
-<app-search></app-search>
+    <!-- Hamburger -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-<app-job-list></app-job-list> -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <!-- Home -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/">{{ title }}</a>
+        </li>
+        <!-- ADD job -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/jobs">Offres</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/jobs/add">CréerJob</a>
+        </li>
+        <!-- about -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/about">À propos</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
 <router-outlet></router-outlet>
