@@ -1,0 +1,50 @@
+<!-- form -->
+<div class="panel-body">
+  <form [formGroup]="form" (ngSubmit)="createJob()">
+
+    <div class="row">
+
+      <div class="form-group col-sm-6">
+        <label for="title">Titre</label>
+        <input type="text" id="title" name="title" class="form-control" placeholder="titre de votre annoce"
+          formControlName="title" aria-describedby="helpId">
+
+        <label for="company">Compagnie</label>
+        <input type="text" name="company" id="company" class="form-control" placeholder="nom de votre companie"
+          formControlName="company" aria-describedby="helpId">
+
+        <label for="city">Ville</label>
+        <input type="text" name="city" id="city" class="form-control" placeholder="nom de votre ville"
+          formControlName="city" aria-describedby="helpId">
+
+        <label for="zipcode">Code Postal</label>
+        <input type="text" name="zipcode" id="zipcode" class="form-control" placeholder="votre Code Postal"
+          formControlName="zipcode">
+      </div>
+
+      <div class="form-group col-sm-6">
+        <label for="description">Description</label>
+        <br>
+        <textarea name="description" formControlName="description" id="description" cols="30" rows="10"></textarea>
+      </div>
+
+      <div class="form-group col-sm-6">
+        <label for="contract">Contrat</label><br>
+        <select name="contract" formControlName="contract" id="contract">
+          <option *ngFor="let ct of contratTypes" [value]="ct.name">
+            {{ ct.name }}
+          </option>
+        </select>
+      </div>
+
+    </div>
+
+    <br>
+    <div class="form-group col-sm-12">
+      <button type="submit" class="btn btn-success">Créer une annonce</button>
+    </div>
+    <br>
+
+
+  </form>
+</div>
