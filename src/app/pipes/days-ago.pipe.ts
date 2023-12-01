@@ -7,7 +7,7 @@ import { fr } from 'date-fns/locale';
 })
 export class DaysAgoPipe implements PipeTransform {
 
-  transform(value: string, ...args: any[]): string | any{ 
+  transform(value: string | Date, ...args: any[]): string | Date { 
     // 06/01/2023 | daysago
     return formatDistanceToNow(new Date(value), { locale: fr });
   }
