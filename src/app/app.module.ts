@@ -14,6 +14,7 @@ import { HomeComponent } from './home/home.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
 import { AboutComponent } from './about/about.component';
 import { ToShortDatePipe } from './pipes/to-short-date.pipe';
+import { ToMonneySymbolPipe } from './pipes/to-monney-symbol.pipe';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ToShortDatePipe } from './pipes/to-short-date.pipe';
     HomeComponent,
     JobDetailsComponent,
     AboutComponent,
-    ToShortDatePipe
+    ToShortDatePipe,
+    ToMonneySymbolPipe
   ],
   imports: [
     BrowserModule,
