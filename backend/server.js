@@ -21,6 +21,7 @@ app.use(bodyParser.json());
 // gérer les autorisations CORS (Cross-Origin Resource Sharing) dans votre application web
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
 
@@ -33,6 +34,13 @@ app.use('/api', api);  // localhost:4201/api/jobs
 api.get('/jobs', (req, res) => {
   // res.json({ success: true, message: 'hello vde' });
   res.json(data.jobs)
+});
+
+api.post('/jobs', (req, res) => {
+  console.log("**************************************");
+  const job = req.body; // body middleware bodyParser
+  console.log(job);
+  res.json(job);
 });
 
 

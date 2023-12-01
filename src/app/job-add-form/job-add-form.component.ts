@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms'
 import { JobService } from '../services/job.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-job-add-form',
@@ -71,7 +72,7 @@ export class JobAddFormComponent implements OnInit {
   }
 
   createJob(jobData : any) {
-    this.jobService.addJob(jobData);
+    this.jobService.addJob(jobData).subscribe();
   }
 
 }

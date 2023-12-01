@@ -18,44 +18,68 @@ export class JobService {
 
   constructor(private http: HttpClient) { }
 
-
   getJobs(): Observable<any> {
-    if (this.jobs.length > 0 && this.initialJobs.length > 0) {
-      // Si les deux tableaux ont déjà des données, les fusionner et les renvoyer.
-      console.log('case if');
-      return of([...this.jobs, ...this.initialJobs]);
-    }
-    else if (this.jobs.length > 0 && this.initialJobs.length === 0) {
-      console.log('case else if');
-      // return this.http.get<any[]>('../../data/jobs.json')
-      return this.http.get(this.BASE_URL + 'api/jobs ')
-        .pipe(
-          map((res: any) => {
-            console.log(res);
-            return res;
-          }),
-          tap((data) => {
-            this.initialJobs = data;
-            this.jobs = [...this.jobs, ...this.initialJobs];
-          }),
-        );
-    }
-    else {
-      // Si les deux tableaux sont vides, récupérer des données depuis le fichier JSON.
-      console.log('case else');
-      // return this.http.get('../../data/jobs.json')
-      return this.http.get(this.BASE_URL + 'api/jobs ')
-        .pipe(
-          map((res: any) => {
-            console.log(res);
-            return res;
-          }),
-          tap((data: any) => {
-            this.initialJobs = data;
-          }),
-        );
-    }
+    return this.http.get(this.BASE_URL + 'api/jobs ')
+      .pipe(
+        map((res: any) => {
+          console.log(res);
+          return res;
+        })
+      );
   }
+
+  addJob(jobData: any)  {
+    console.log('add job');    
+    jobData.id = Date.now();
+    // this.jobs = [jobData, ...this.jobs];
+    // return this.JobsSubject.next(jobData);
+
+    return this.http.post(this.BASE_URL + 'api/jobs', jobData)
+      .pipe(
+        map((res) => {
+          console.log(res);
+          this.JobsSubject.next(jobData);
+        })
+      );
+  }
+
+  // getJobs(): Observable<any> {
+  //   if (this.jobs.length > 0 && this.initialJobs.length > 0) {
+  //     // Si les deux tableaux ont déjà des données, les fusionner et les renvoyer.
+  //     console.log('case if');
+  //     return of([...this.jobs, ...this.initialJobs]);
+  //   }
+  //   else if (this.jobs.length > 0 && this.initialJobs.length === 0) {
+  //     console.log('case else if');
+  //     // return this.http.get<any[]>('../../data/jobs.json')
+  //     return this.http.get(this.BASE_URL + 'api/jobs ')
+  //       .pipe(
+  //         map((res: any) => {
+  //           console.log(res);
+  //           return res;
+  //         }),
+  //         tap((data) => {
+  //           this.initialJobs = data;
+  //           this.jobs = [...this.jobs, ...this.initialJobs];
+  //         }),
+  //       );
+  //   }
+  //   else {
+  //     // Si les deux tableaux sont vides, récupérer des données depuis le fichier JSON.
+  //     console.log('case else');
+  //     // return this.http.get('../../data/jobs.json')
+  //     return this.http.get(this.BASE_URL + 'api/jobs ')
+  //       .pipe(
+  //         map((res: any) => {
+  //           console.log(res);
+  //           return res;
+  //         }),
+  //         tap((data: any) => {
+  //           this.initialJobs = data;
+  //         }),
+  //       );
+  //   }
+  // }
 
   /** Amngular 4 marche pas ici avec 17 */
   // getJobs() {
@@ -125,10 +149,6 @@ export class JobService {
   //   // .subscribe();
   // }
 
-  addJob(jobData: any) {
-    jobData.id = Date.now();
-    this.jobs = [jobData, ...this.jobs];
-    return this.JobsSubject.next(jobData);
-  }
+
 
 }
