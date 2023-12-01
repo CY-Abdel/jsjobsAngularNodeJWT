@@ -1,3 +1,10 @@
-.search-input {
+/* .search-input {
   height: 37px;
+} */
+
+.formflex {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 1rem;
 }

@@ -1,1 +1,8 @@
-<p>search-result works!</p>
+<!-- search-result works! -->
+<div *ngFor="let job of jobs">
+  {{ job.title }} - {{ job.city }}
+</div>
+
+<div *ngIf="msg.length > 0">
+  {{ msg }}
+</div>

@@ -12,6 +12,10 @@ export class JobService {
   jobs: any = [];
   initialJobs: any = [];
   JobsSubject = new Subject();
+  
+  //resultat de recherche
+  searchResultSubject = new Subject();
+
 
   // conecter back et front
   BASE_URL = 'http://localhost:4201/';
@@ -71,9 +75,11 @@ export class JobService {
 
     return this.http.get(`${this.BASE_URL}api/search${term}${place}`)
       .pipe(
-        map((res: any) => res)
+        map((res: any) => res),
+        tap(res => this.searchResultSubject.next(res))
       );
   }
+}
 
   // getJobs(): Observable<any> {
   //   if (this.jobs.length > 0 && this.initialJobs.length > 0) {
@@ -183,4 +189,4 @@ export class JobService {
 
 
 
-}
+// }

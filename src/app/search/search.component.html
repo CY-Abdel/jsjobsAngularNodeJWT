@@ -1,10 +1,12 @@
 <!-- search works! -->
-<div>
-  <form #searchForm="ngForm" (ngSubmit)="searchJobs(searchForm.value)">
-    <input type="text" ngModel class="search-input" name="term" placeholder="Angular, React, Node ...">
+<div class="col-sm-6">
+  <form class="formflex" #searchForm="ngForm" (ngSubmit)="searchJobs(searchForm.value)">
+    <input type="text" ngModel class="search-input" name="term" placeholder="Angular, React, Node ..." required>
     <!-- // charger le lieu -->
     <input type="text" ngModel class="search-input" name="place" placeholder="Nantes, Lyon, Paris ...">
     
-    <button type="submit" class="btn btn-success">Chercher</button>
+    <button type="submit" class="btn btn-dark">Chercher avec champs vides</button>
+    <button type="submit" class="btn btn-success" [disabled]="searchForm.form.invalid">Chercher sans champs vides</button>
   </form>
 </div>
+  

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { JobService } from '../services/job.service';
+import { NgForm } from '@angular/forms';
+import { SearchResultComponent } from '../search-result/search-result.component';
 
 @Component({
   selector: 'app-search',
@@ -27,5 +29,4 @@ export class SearchComponent implements OnInit {
         }
       });
   }
-
 }

@@ -75,7 +75,6 @@ api.get('/search/:term?/:place?', (req, res) => {
 
   let place = req.params.place;
 
-
   if (term) {
     let jobs = getAllJobs().filter(jb => (jb.description.toLowerCase().includes(term) || jb.title.toLowerCase().includes(term)));
     
@@ -87,7 +86,7 @@ api.get('/search/:term?/:place?', (req, res) => {
     if (jobs.length > 0){
       res.json({ success: true, jobs });
     } else {
-      res.json("Aucun résultat trouvé !");
+      res.json({ message: 'Aucun résultat trouvé !'});
     }
   } else {
     let jobs = getAllJobs();
