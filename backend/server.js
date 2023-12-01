@@ -17,7 +17,7 @@ let initalJobs = data.jobs;
 let addedJobs = [];
 
 const getAllJobs = () => {
-  return [...addedJobs, ... initalJobs];
+  return [...addedJobs, ...initalJobs];
 }
 
 app.use(express.json())
@@ -36,13 +36,37 @@ app.use('/api', api);  // localhost:4201/api/jobs
 // app.use("/jobs", jobsRoutes);
 // Par cela si vous utilisez 'api' comme un router => app.use("/api/jobs", jobsRoutes);
 
-
+// GET ALL JOBS
 api.get('/jobs', (req, res) => {
   // res.json({ success: true, message: 'hello vde' });
   // res.json(data.jobs)
   res.json(getAllJobs())
 });
 
+// get one jobs
+api.get('/jobs/:id', (req, res) => {
+  let id = req.params.id; // id is a string here
+  id = parseInt(id, 10); // cast to id 
+  const job = getAllJobs().filter((j) => j.id === id);
+  if (job.length === 1) {
+    res.json({
+      success: true,
+      job: job[0]
+    })
+  } else if (isNaN(id)) {
+    res.json({
+      success: false,
+      message: `le id doit etre un nombre`
+    })
+  } else {
+    res.json({
+      success: false,
+      message: `pas de job pour ce id : ${id}`
+    })
+  }
+});
+
+// POST ONE Jobs
 api.post('/jobs', (req, res) => {
   console.log("**************************************");
   const job = req.body; // body middleware bodyParser
