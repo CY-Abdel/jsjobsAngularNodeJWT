@@ -73,6 +73,8 @@ export class JobAddFormComponent implements OnInit {
 
   createJob(jobData : any) {
     this.jobService.addJob(jobData).subscribe();
+    // vider le formulaire apres le post => reset()
+    this.form.reset();
   }
 
 }
