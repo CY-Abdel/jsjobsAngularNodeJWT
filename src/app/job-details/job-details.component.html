@@ -1,1 +1,7 @@
-<p>job-details works!</p>
+<div *ngIf="jobDetails; else noJobDetails">
+  <pre>{{ jobDetails | json }}</pre>
+</div>
+
+<ng-template #noJobDetails>
+  <div>{{ errorMessage }}</div>
+</ng-template>

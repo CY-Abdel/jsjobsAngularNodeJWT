@@ -22,7 +22,7 @@ export class JobService {
     return this.http.get(this.BASE_URL + 'api/jobs ')
       .pipe(
         map((res: any) => {
-          console.log(res);
+          // console.log(res);
           return res;
         })
       );
@@ -39,6 +39,15 @@ export class JobService {
         map((res) => {
           this.JobsSubject.next(jobData);
           console.log(res);
+        })
+      );
+  }
+
+  getJob(id : number | string) {
+    return this.http.get(this.BASE_URL + `api/jobs/${id}`)
+      .pipe(
+        map((res: any) => {
+          return res;
         })
       );
   }
