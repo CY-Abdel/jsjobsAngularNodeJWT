@@ -8,7 +8,7 @@ export class ToShortDatePipe implements PipeTransform {
   transform(value: any, ...args: any[]) : any {
     
     if (value.toLowerCase() === 'asap') {
-      return "now";
+      return "Dés que possible";
     } else if (value.indexOf('-') > -1 ) {
       let fullDate, rest;
       // '2023-11-11T10:32:33' => ['2023-11-11', '10:32:33']

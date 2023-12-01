@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class JobDetailsComponent implements OnInit {
 
-  jobDetails = null;
+  jobDetails: any = null;
   error = null;
   errorMessage : string = "";
 
@@ -30,7 +30,7 @@ export class JobDetailsComponent implements OnInit {
       })
   }
 
-  handleServerRespons(response: boolean | any) {
+  handleServerRespons(response: any) {
     if (response.success) {
       this.jobDetails = response.job; // voir api.get dans server.js
     } else {

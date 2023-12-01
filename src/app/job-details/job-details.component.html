@@ -1,7 +1,41 @@
-<div *ngIf="jobDetails; else noJobDetails">
-  <pre>{{ jobDetails | json }}</pre>
+<div *ngIf="jobDetails">
+  <div class="card text-center">
+    <img class="card-img-top" src="holder.js/100px180/" alt="">
+    <div class="card-title bg-dark text-primary">
+      <h3>{{ jobDetails.title }}</h3>
+    </div>
+    <div class="card-body">
+      <div>
+        {{ jobDetails.company }} <br>
+        {{ jobDetails.city }} - {{ jobDetails.zipcode }} <br>
+        {{ jobDetails.contract }}
+        <hr>
+        publié le {{ jobDetails.publishdate | toShortDate }} <br>
+        actualisé le {{ jobDetails.lastupdate | toShortDate }} <br>
+        salaire : {{ jobDetails.salary }} {{ jobDetails.currency }} <br>
+        <hr>
+        <b>Descriptif du poste</b>
+        <div>
+          {{ jobDetails.description }}
+        </div>
+        <br>
+        <div>
+          date de démarrage : {{ jobDetails.startdate | toShortDate }} <br>
+          statu : {{ jobDetails.status }} <br>
+          déplacements : {{ jobDetails.area }}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<ng-template #noJobDetails>
-  <div>{{ errorMessage }}</div>
-</ng-template>
+
+
+
+<div *ngIf="errorMessage">
+  <pre>{{ errorMessage }}</pre>
+</div>
+
+<div *ngIf="error">
+  <pre>{{ error | json }}</pre>
+</div>
