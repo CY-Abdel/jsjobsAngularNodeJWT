@@ -66,6 +66,35 @@ api.get('/jobs/:id', (req, res) => {
   }
 });
 
+// Search Jobs
+api.get('/search/:term?/:place?', (req, res) => {
+  let term = req.params.term
+  if (term) {
+    term = req.params.term.toLowerCase().trim();
+  }
+
+  let place = req.params.place;
+
+
+  if (term) {
+    let jobs = getAllJobs().filter(jb => (jb.description.toLowerCase().includes(term) || jb.title.toLowerCase().includes(term)));
+    
+    if (place) {
+      place = place.toLowerCase().trim();
+      jobs = jobs.filter(jb => (jb.city.toLowerCase().includes(place)));
+    }
+
+    if (jobs.length > 0){
+      res.json({ success: true, jobs });
+    } else {
+      res.json("Aucun résultat trouvé !");
+    }
+  } else {
+    let jobs = getAllJobs();
+    res.json({ success: true, jobs });
+  }
+});
+
 // POST ONE Jobs
 api.post('/jobs', (req, res) => {
   console.log("**************************************");
