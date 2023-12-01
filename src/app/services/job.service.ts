@@ -28,8 +28,8 @@ export class JobService {
       );
   }
 
-  addJob(jobData: any)  {
-    console.log('add job');    
+  addJob(jobData: any) {
+    console.log('add job');
     jobData.id = Date.now();
     // this.jobs = [jobData, ...this.jobs];
     // return this.JobsSubject.next(jobData);
@@ -43,12 +43,35 @@ export class JobService {
       );
   }
 
-  getJob(id : number | string) {
+  getJob(id: number | string) {
     return this.http.get(this.BASE_URL + `api/jobs/${id}`)
       .pipe(
         map((res: any) => {
           return res;
         })
+      );
+  }
+
+  // fonction mais pas si les champs sont vides
+  /** 
+  // searchJob(criteria: any) {
+  //   console.log(criteria);
+  //   return this.http.get(`${this.BASE_URL}api/search/${criteria.term}/${criteria.place}`)
+  //     .pipe(
+  //       map((res: any) => {
+  //         res.json();
+  //       })
+  //     )
+  // }
+  */
+
+  searchJob(criteria: any) {
+    const term = criteria.term ? `/${criteria.term}` : '';
+    const place = criteria.place ? `/${criteria.place}` : '';
+
+    return this.http.get(`${this.BASE_URL}api/search${term}${place}`)
+      .pipe(
+        map((res: any) => res)
       );
   }
 

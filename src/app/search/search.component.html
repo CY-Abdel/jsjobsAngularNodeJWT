@@ -1,1 +1,10 @@
-<p>search works!</p>
+<!-- search works! -->
+<div>
+  <form #searchForm="ngForm" (ngSubmit)="searchJobs(searchForm.value)">
+    <input type="text" ngModel class="search-input" name="term" placeholder="Angular, React, Node ...">
+    <!-- // charger le lieu -->
+    <input type="text" ngModel class="search-input" name="place" placeholder="Nantes, Lyon, Paris ...">
+    
+    <button type="submit" class="btn btn-success">Chercher</button>
+  </form>
+</div>

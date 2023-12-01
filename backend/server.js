@@ -66,7 +66,7 @@ api.get('/jobs/:id', (req, res) => {
   }
 });
 
-// Search Jobs
+// Search Jobs *********
 api.get('/search/:term?/:place?', (req, res) => {
   let term = req.params.term
   if (term) {
