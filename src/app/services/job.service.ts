@@ -37,8 +37,8 @@ export class JobService {
     return this.http.post(this.BASE_URL + 'api/jobs', jobData)
       .pipe(
         map((res) => {
-          console.log(res);
           this.JobsSubject.next(jobData);
+          console.log(res);
         })
       );
   }

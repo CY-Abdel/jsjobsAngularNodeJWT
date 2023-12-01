@@ -36,7 +36,7 @@ export class JobListComponent implements OnInit {
     this.jobService.JobsSubject
       .subscribe({
         next: data => {
-          console.log(data);
+          // console.log(data);
           this.jobs = [data, ...this.jobs];
         }
       })

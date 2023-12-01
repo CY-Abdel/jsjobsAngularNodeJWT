@@ -13,6 +13,12 @@ let data = require('./jobs');
 // console.log('jobs : ', Object.values(data.jobs)[0]);
 // console.log('jobs : ', Object.values(data.jobs)[1]);
 
+let initalJobs = data.jobs;
+let addedJobs = [];
+
+const getAllJobs = () => {
+  return [...addedJobs, ... initalJobs];
+}
 
 app.use(express.json())
 app.use(bodyParser.json());
@@ -33,13 +39,16 @@ app.use('/api', api);  // localhost:4201/api/jobs
 
 api.get('/jobs', (req, res) => {
   // res.json({ success: true, message: 'hello vde' });
-  res.json(data.jobs)
+  // res.json(data.jobs)
+  res.json(getAllJobs())
 });
 
 api.post('/jobs', (req, res) => {
   console.log("**************************************");
   const job = req.body; // body middleware bodyParser
-  console.log(job);
+  addedJobs = [job, ...addedJobs];
+  // console.log('nb total de job : ', addedJobs.length);
+  console.log('nb total de job : ', getAllJobs().length);
   res.json(job);
 });
 
