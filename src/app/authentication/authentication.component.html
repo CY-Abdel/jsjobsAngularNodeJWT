@@ -1,8 +1,11 @@
 <!-- <p>authentication works!</p> -->
 
-<div class="container" *ngIf="!isAuthenricated">
+<div class="container" *ngIf="!isAuthenticated">
   <div class="row" >
     <div class="col-md-6 d-flex flex-column justify-content-center" >
+      
+      <h3>Se connecter</h3>
+
       <form #loginform="ngForm" (ngSubmit)="login(loginform.value)">
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
@@ -10,17 +13,19 @@
             placeholder="abc@mail.com" required>
           <small id="emailHelpId" class="form-text text-muted">email</small>
         </div>
+       
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
           <input type="password" [(ngModel)]="password" class="form-control" name="password" id="password" placeholder="" required>
         </div>
+
         <button type="submit" class="btn btn-primary" [disabled]="loginform.form.invalid">Login</button>
       </form>
     </div>
   </div>
 </div>
 
-<div *ngIf="isAuthenricated">
+<div *ngIf="isAuthenticated">
   {{ welcomeMessage }}
   <pre>
     {{ jbbData | json }}

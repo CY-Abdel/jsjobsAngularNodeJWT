@@ -10,7 +10,7 @@ export class AuthenticationComponent implements OnInit {
   email!: any;
   password!: any;
 
-  isAuthenricated = false;
+  isAuthenticated = false;
   jbbData = null;
   welcomeMessage: string = "";
 
@@ -18,13 +18,13 @@ export class AuthenticationComponent implements OnInit {
 
   ngOnInit(): void {
     // jbb-data est le nom du token
-    if (localStorage.getItem('jbb-data')) {
+    if (this.authService.userIsLoggedIn()) {
       this.refreshFlags;
     }
   }
 
   refreshFlags() {
-    this.isAuthenricated = true;
+    this.isAuthenticated = true;
     this.welcomeMessage = 'Bienvenue';
   }
 

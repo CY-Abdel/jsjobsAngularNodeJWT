@@ -1,0 +1,30 @@
+
+<div class="container" *ngIf="!authService.userIsLoggedIn()">
+  <div class="row" >
+    <div class="col-md-6 d-flex flex-column justify-content-center" >
+
+      <h3>Créer un compte</h3>
+
+      <form #registerForm="ngForm" (ngSubmit)="register(registerForm.value)">
+        
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" [(ngModel)]="email" class="form-control" name="email" id="email" aria-describedby="emailHelpId"
+            placeholder="abc@mail.com" required>
+        </div>
+       
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" [(ngModel)]="password" class="form-control" name="password" id="password" placeholder="Mot de passe" required>
+        </div>
+       
+        <div class="mb-3">
+          <label for="confirm-password" class="form-label">Confimrer le password</label>
+          <input type="password" [(ngModel)]="confirm_password" class="form-control" name="confirm-password" id="confirm-password" placeholder="confirmer le Mot de passe" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" [disabled]="registerForm.form.invalid">Login</button>
+      </form>
+    </div>
+  </div>
+</div>

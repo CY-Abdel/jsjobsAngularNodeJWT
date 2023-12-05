@@ -34,6 +34,15 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/about">À propos</a>
         </li>
+        <li class="nav-item" *ngIf="!authService.userIsLoggedIn()">
+          <a class="nav-link" routerLink="/login">se connecter</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  routerLink="/" (click)="authService.logout()" *ngIf="authService.userIsLoggedIn()">se déconnecter</a>
+        </li>
+        <li class="nav-item" *ngIf="!authService.userIsLoggedIn()">
+          <a routerLink="/register" class="nav-link">créer un compte</a>
+        </li>
       </ul>
     </div>
   </div>

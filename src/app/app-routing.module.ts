@@ -6,6 +6,7 @@ import { JobDetailsComponent } from './job-details/job-details.component';
 import { AboutComponent } from './about/about.component';
 import { JobAddFormComponent } from './job-add-form/job-add-form.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -14,7 +15,7 @@ const routes: Routes = [
   {path: 'jobs', component: JobListComponent},
   {path: 'about', component: AboutComponent},
   {path: 'login', component: AuthenticationComponent},
-  {path: 'register', component: AuthenticationComponent},
+  {path: 'register', component: RegisterComponent},
 ];
 
 @NgModule({
