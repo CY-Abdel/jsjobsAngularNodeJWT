@@ -4,8 +4,13 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const port = 4201
+
 // const router = express.Router(); // router ou api
 const api = express.Router();
+const auth = express.Router();
+
+const jwt = require('jsonwebtoken');
+const fakeUser = { email: 'juba@vde.fr', password: 'juba' };
 
 // Import du module jobs
 let data = require('./jobs');
@@ -15,6 +20,7 @@ let data = require('./jobs');
 
 let initalJobs = data.jobs;
 let addedJobs = [];
+
 
 const getAllJobs = () => {
   return [...addedJobs, ...initalJobs];
@@ -26,17 +32,39 @@ app.use(bodyParser.json());
 // midleware pout connecter fron et back
 // gérer les autorisations CORS (Cross-Origin Resource Sharing) dans votre application web
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   next();
 });
 
+
 app.use('/api', api);  // localhost:4201/api/jobs
+app.use('/auth', auth);  // localhost:4201/auth/login
 // Si on utilise Route et Controllers Remplacez cette ligne => app.use('/api', api);
 // app.use("/jobs", jobsRoutes);
 // Par cela si vous utilisez 'api' comme un router => app.use("/api/jobs", jobsRoutes);
 
 // GET ALL JOBS
+
+auth.post('/login', (req, res) => {
+  console.log('req.body : ', req.body);
+  if (req.body) {
+    const email = req.body.email.toLowerCase();
+    const password = req.body.password.toLowerCase();
+
+    if (email === fakeUser.email && password === fakeUser.password) {
+      delete req.body.password;
+      res.json({ success: true, data: req.body });
+    } else {
+      res.json({ success: false, message: "email ou mdp incorrects" });
+    }
+  } else {
+    res.json({ success: false, message: "données manquantes" });
+  }
+});
+
+
 api.get('/jobs', (req, res) => {
   // res.json({ success: true, message: 'hello vde' });
   // res.json(data.jobs)
@@ -77,16 +105,16 @@ api.get('/search/:term?/:place?', (req, res) => {
 
   if (term) {
     let jobs = getAllJobs().filter(jb => (jb.description.toLowerCase().includes(term) || jb.title.toLowerCase().includes(term)));
-    
+
     if (place) {
       place = place.toLowerCase().trim();
       jobs = jobs.filter(jb => (jb.city.toLowerCase().includes(place)));
     }
 
-    if (jobs.length > 0){
+    if (jobs.length > 0) {
       res.json({ success: true, jobs });
     } else {
-      res.json({ message: 'Aucun résultat trouvé !'});
+      res.json({ message: 'Aucun résultat trouvé !' });
     }
   } else {
     let jobs = getAllJobs();
