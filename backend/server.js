@@ -41,7 +41,7 @@ app.use(bodyParser.json());
 // gérer les autorisations CORS (Cross-Origin Resource Sharing) dans votre application web
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   next();
 });
@@ -53,7 +53,19 @@ app.use('/auth', auth);  // localhost:4201/auth/login
 // app.use("/jobs", jobsRoutes);
 // Par cela si vous utilisez 'api' comme un router => app.use("/api/jobs", jobsRoutes);
 
-// GET ALL JOBS
+// middleware pour renforcer la sécurité coté backend (pas de securité frontend toujours en backend)
+const checkUserToken = (req, res, next) => {
+  // Authorization : "Bearer azaeazeazeazeazeazeazeazeazeazeaze";
+  if (req.header('authorization')) {
+    return res.status(401).json({ success: false, message: "Header authorization manquant" });
+  }
+
+  const tonkenParts = req.header('authorizaztion').split(' ');
+  let token = tonkenParts[1];
+  const decodedToken = jwt.verify(token, secretKey);
+  console.log('decodedToken ', decodedToken);
+  next();
+};
 
 auth.post('/login', (req, res) => {
   console.log('req.body : ', req.body);
@@ -86,6 +98,7 @@ auth.post('/login', (req, res) => {
   }
 });
 
+
 auth.post('/register', (req, res) => {
   // console.log("res.body " , res.body);
 
@@ -103,8 +116,8 @@ auth.post('/register', (req, res) => {
   }
 });
 
-
-api.get('/jobs', (req, res) => {
+// GET ALL JOBS
+api.get('/jobs', checkUserToken, (req, res) => {
   // res.json({ success: true, message: 'hello vde' });
   // res.json(data.jobs)
   res.json(getAllJobs())

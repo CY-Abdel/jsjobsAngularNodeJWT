@@ -1,5 +1,5 @@
 <!-- form -->
-<div class="card-body">
+<div class="card-body" *ngIf="userIsLoggedIn">
   <form [formGroup]="form" (ngSubmit)="createJob(form.value)">
 
     <div class="row">
@@ -89,6 +89,15 @@
     </div>
     <br>
 
-
   </form>
+</div>
+
+<div *ngIf="!userIsLoggedIn">
+  <h2>Création d'annonce réservée uniquement aux utilisateurs inscrits</h2>
+  <div>
+    Vous pouvez créer un compte ou vous connecter afin d'ajouter une annonce.
+    <br>
+  </div>
+  <a href="" routerLink="/login">Se connecter</a> ou 
+  <a href="" routerLink="/register">créer un compte</a>
 </div>

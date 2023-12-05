@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms'
 import { JobService } from '../services/job.service';
 import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-job-add-form',
@@ -47,7 +48,9 @@ export class JobAddFormComponent implements OnInit {
 
   form!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private jobService: JobService) { }
+  userIsLoggedIn = false;
+
+  constructor(private formBuilder: FormBuilder, private jobService: JobService, private authService: AuthService) { }
 
 
   ngOnInit(): void {
@@ -55,7 +58,7 @@ export class JobAddFormComponent implements OnInit {
       "id": -1,
       "title": "",
       "company": "",
-      "city": "", 
+      "city": "",
       "zipcode": 35,
       "description": "",
       "contract": "",
@@ -69,12 +72,42 @@ export class JobAddFormComponent implements OnInit {
       "publishdate": new Date(),
       "lastupdate": new Date()
     });
+
+    this.checkUserIsLoggedIn();
   }
 
-  createJob(jobData : any) {
-    this.jobService.addJob(jobData).subscribe();
+  // createJob(jobData: any) {
+  //   const token = JSON.parse(localSto«rage.getItem('jbb-data')).token;
+  //   this.jobService.addJob(jobData, token).subscribe();
+
+  //   // vider le formulaire apres le post => reset()
+  //   this.form.reset();
+  // }
+
+  createJob(jobData: any) {
+    // Récupérer les données du local storage
+    const localStorageDataString = localStorage.getItem('jbb-data');
+
+    // Vérifier si les données existent
+    if (localStorageDataString !== null) {
+      const localStorageData = JSON.parse(localStorageDataString);
+
+      // Vérifier si la propriété token est définie
+      if (localStorageData && localStorageData.token) {
+        const token = localStorageData.token;
+
+        // Appeler le service avec le token
+        this.jobService.addJob(jobData, token).subscribe();
+
+      }
+    }
     // vider le formulaire apres le post => reset()
     this.form.reset();
   }
 
+  checkUserIsLoggedIn() {
+    if (this.authService.userIsLoggedIn()) {
+      this.userIsLoggedIn = true;
+    }
+  }
 }

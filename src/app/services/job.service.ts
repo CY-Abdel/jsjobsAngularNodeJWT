@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Subject } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class JobService {
   // conecter back et front
   BASE_URL = 'http://localhost:4201/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   getJobs(): Observable<any> {
     return this.http.get(this.BASE_URL + 'api/jobs ')
@@ -32,13 +33,15 @@ export class JobService {
       );
   }
 
-  addJob(jobData: any) {
+  addJob(jobData: any, token: any) {
     console.log('add job');
     jobData.id = Date.now();
     // this.jobs = [jobData, ...this.jobs];
     // return this.JobsSubject.next(jobData);
 
-    return this.http.post(this.BASE_URL + 'api/jobs', jobData)
+    const headers = this.authService.addAuthorizationHeader(token);
+
+    return this.http.post(this.BASE_URL + 'api/jobs', jobData, headers)
       .pipe(
         map((res) => {
           this.JobsSubject.next(jobData);

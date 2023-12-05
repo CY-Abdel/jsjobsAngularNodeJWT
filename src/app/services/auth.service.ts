@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { map } from 'rxjs';
@@ -20,11 +20,20 @@ export class AuthService {
   }
 
   userIsLoggedIn() {
-    return localStorage.getItem('jbb-data'); //true or false
+    return !!localStorage.getItem('jbb-data'); //true or false // !! caster un valeur en booleen
   }
 
   logout() {
     localStorage.removeItem('jbb-data');
+  }
+
+  addAuthorizationHeader(token : string) {
+    // 'Authorization' : 'Bearer azeazeazeazeazeaze';
+    const authorizationHeader = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return { headers: authorizationHeader };
   }
 
   register(credentials: any) {
