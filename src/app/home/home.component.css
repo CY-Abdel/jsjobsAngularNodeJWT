@@ -1,0 +1,22 @@
+.fadein {
+  opacity: 0;
+  /* transform: translateX(50px); */
+  animation: fade 7s ease 4ms forwards;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: .8;
+    color: red;
+  }
+  50% {
+    opacity: .4;
+    color: blue;
+  }
+  100% {
+    opacity: 1;
+  }
+}
