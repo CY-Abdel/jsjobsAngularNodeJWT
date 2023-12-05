@@ -1,6 +1,7 @@
 <div *ngIf="decodeToken">
-  <pre>{{ decodeToken | json }}</pre>
   {{ decodeToken | json }}
+  <br>
+  <pre>{{ decodeToken | json }}</pre>
   <!-- 
   /** La balise
   englobe le bloc de code JavaScript. Cela signifie que l'indentation, les espaces et les sauts de ligne du code source
@@ -14,3 +15,12 @@
 <div *ngIf="!decodeToken">
   Aucun user trouvé
 </div>
+
+<div *ngIf="isAdmin">
+  Je suis un Admin
+</div>
+
+<div *ngIf="!isAdmin">
+  Je suis un simple User
+</div>
+

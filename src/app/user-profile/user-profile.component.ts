@@ -9,6 +9,7 @@ import { AuthService } from '../services/auth.service';
 export class UserProfileComponent implements OnInit {
 
   decodeToken: any = null;
+  isAdmin = false;
 
 
   constructor(private authService: AuthService) { }
@@ -24,6 +25,10 @@ export class UserProfileComponent implements OnInit {
         this.decodeToken = this.authService.decodeToken(jbbToken.token);
 
         console.log(this.decodeToken);
+
+        if(this.decodeToken && this.decodeToken.role === 'admin') {
+          this.isAdmin = true;          
+        }
       } else {
         console.error("La clé 'jbb-data' n'a pas été trouvée dans le stockage local.");
       }
