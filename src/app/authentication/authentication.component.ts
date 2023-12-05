@@ -12,11 +12,21 @@ export class AuthenticationComponent implements OnInit {
 
   isAuthenricated = false;
   jbbData = null;
-  welcomeMessage : string = "";
+  welcomeMessage: string = "";
 
   constructor(private authService: AuthService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    // jbb-data est le nom du token
+    if (localStorage.getItem('jbb-data')) {
+      this.refreshFlags;
+    }
+  }
+
+  refreshFlags() {
+    this.isAuthenricated = true;
+    this.welcomeMessage = 'Bienvenue';
+  }
 
   login(formData: any) {
     this.authService.login(formData)
@@ -29,8 +39,7 @@ export class AuthenticationComponent implements OnInit {
   handleLoginSucces(data: any) {
     console.log('success ', data);
     this.jbbData = data;
-    this.isAuthenricated = true;
-    this.welcomeMessage = 'Bienvenue';
+    this.refreshFlags();
     //stringify car dans le localstorage on ne peut mettre que des string pas du json
     localStorage.setItem('jbb-data', JSON.stringify(data));
   }
