@@ -17,6 +17,7 @@ import { ToShortDatePipe } from './pipes/to-short-date.pipe';
 import { ToMonneySymbolPipe } from './pipes/to-monney-symbol.pipe';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 import { RegisterComponent } from './register/register.component';
 
 @NgModule({
@@ -33,7 +34,8 @@ import { RegisterComponent } from './register/register.component';
     ToMonneySymbolPipe,
     SearchResultComponent,
     AuthenticationComponent,
-    RegisterComponent
+    RegisterComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

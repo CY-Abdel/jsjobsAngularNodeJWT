@@ -8,18 +8,31 @@ import { AuthService } from '../services/auth.service';
 })
 export class RegisterComponent implements OnInit {
 
-  email: any;
-  password: any;
-  confirm_password: any;
+  email!: any;
+  password!: any;
+  confirm_password!: any;
 
-  constructor(protected authService: AuthService) { }
+  constructor(public authService: AuthService) { }
 
   ngOnInit(): void {
 
   }
 
   register(formData: any) {
-    this.authService.register(formData);
+    this.authService.register(formData)
+      .subscribe({
+        next: data => { this.handleLoginSuccess(data) },
+        error: err => { this.handleLoginFailure(err) }
+      });
+  }
+
+  handleLoginSuccess(data: any) {
+    console.log('success ', data);
+    // localStorage.setItem('jbb-data', JSON.stringify(data));
+  }
+
+  handleLoginFailure(err: any) {
+    console.log('failure ', err);
   }
 
 }

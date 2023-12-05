@@ -9,7 +9,9 @@ const port = 4201
 const api = express.Router();
 const auth = express.Router();
 
-const fakeUser = { email: 'juba@vde.fr', password: 'juba' };
+let users = [];
+const fakeUser = { id: 1, email: 'juba@vde.fr', name:'juba', password: 'juba' };
+// const fakeUser = { email: 'juba@vde.fr', password: 'juba' };
 const secretKey = "9UbmJJMlKa1tH36Bpc8ZG8wfPC2Yv68hA5m5zPdW9CHDdx99EKlu6RjbHsrPevD1";
 const jwt = require('jsonwebtoken');
 
@@ -67,6 +69,23 @@ auth.post('/login', (req, res) => {
     }
   } else {
     res.json({ success: false, message: "données manquantes" });
+  }
+});
+
+auth.post('/register', (req, res) => {
+  console.log("res.body " , res.body);
+  
+  if(req.body) {
+    const email = req.body.email.toLocaleLowerCase().trim();
+    const password = req.body.password.toLocaleLowerCase().trim();
+    // const name = req.body.name.trim();
+    // const name = req.body.name.trim();
+
+    // users = [{ id: Date.now(), email: email, name: name, password: password }, ...users];
+    users = [{ id: Date.now(), email: email, password: password }, ...users];
+    res.json({ success: true, users: users });
+  } else {
+    res.json({ success : false, message: 'la création a échoué' });
   }
 });
 
