@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +13,7 @@ export class RegisterComponent implements OnInit {
   password!: any;
   confirm_password!: any;
 
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -28,7 +29,7 @@ export class RegisterComponent implements OnInit {
 
   handleLoginSuccess(data: any) {
     console.log('success ', data);
-    // localStorage.setItem('jbb-data', JSON.stringify(data));
+    this.router.navigate(['/login']);
   }
 
   handleLoginFailure(err: any) {

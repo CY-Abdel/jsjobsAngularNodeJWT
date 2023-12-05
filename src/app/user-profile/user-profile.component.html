@@ -1,3 +1,16 @@
 <div *ngIf="decodeToken">
+  <pre>{{ decodeToken | json }}</pre>
   {{ decodeToken | json }}
+  <!-- 
+  /** La balise
+  englobe le bloc de code JavaScript. Cela signifie que l'indentation, les espaces et les sauts de ligne du code source
+  seront respectés lors de l'affichage */
+
+  /** La balise est souvent utilisée pour afficher du code source, des données JSON, des messages de console, etc., de
+  manière à ce que la mise en forme soit préservée pour une meilleure lisibilité. */ 
+-->
+</div>
+
+<div *ngIf="!decodeToken">
+  Aucun user trouvé
 </div>

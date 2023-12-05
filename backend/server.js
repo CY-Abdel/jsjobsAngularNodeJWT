@@ -9,8 +9,8 @@ const port = 4201
 const api = express.Router();
 const auth = express.Router();
 
-let users = [];
-const fakeUser = { id: 1, email: 'juba@vde.fr', name:'juba', password: 'juba' };
+let users = [{ id: 1, email: 'juba@vde.fr', name: 'juba', password: 'juba' }];
+// const fakeUser = { id: 1, email: 'juba@vde.fr', name:'juba', password: 'juba' };
 // const fakeUser = { email: 'juba@vde.fr', password: 'juba' };
 const secretKey = "9UbmJJMlKa1tH36Bpc8ZG8wfPC2Yv68hA5m5zPdW9CHDdx99EKlu6RjbHsrPevD1";
 const jwt = require('jsonwebtoken');
@@ -56,26 +56,27 @@ auth.post('/login', (req, res) => {
   if (req.body) {
     const email = req.body.email.toLowerCase();
     const password = req.body.password.toLowerCase();
+    const index = users.findIndex(user => user.email === email);
 
-    if (email === fakeUser.email && password === fakeUser.password) {
-      delete req.body.password;
+    if (index > -1 && users[index].password === password) {
       // res.json({ success: true, data: req.body });
       const token = jwt.sign({ iss: 'http://localhost:4201', email: req.body.email, role: 'admin' }, secretKey);
       // iss: 'http://localhost:4201' spécifie que l'émetteur du token est http://localhost:4201. 
       // Cela indique généralement l'URL du service ou de l'application qui a généré le token.
       res.json({ success: true, token: token });
     } else {
-      res.json({ success: false, message: "email ou mdp incorrects" });
+      // non autorisé si 401
+      res.status(401).json({ success: false, message: "email ou mdp incorrects" });
     }
   } else {
-    res.json({ success: false, message: "données manquantes" });
+    res.status(500).json({ success: false, message: "données manquantes" });
   }
 });
 
 auth.post('/register', (req, res) => {
-  console.log("res.body " , res.body);
-  
-  if(req.body) {
+  // console.log("res.body " , res.body);
+
+  if (req.body) {
     const email = req.body.email.toLocaleLowerCase().trim();
     const password = req.body.password.toLocaleLowerCase().trim();
     // const name = req.body.name.trim();
@@ -85,7 +86,7 @@ auth.post('/register', (req, res) => {
     users = [{ id: Date.now(), email: email, password: password }, ...users];
     res.json({ success: true, users: users });
   } else {
-    res.json({ success : false, message: 'la création a échoué' });
+    res.json({ success: false, message: 'la création a échoué' });
   }
 });
 
