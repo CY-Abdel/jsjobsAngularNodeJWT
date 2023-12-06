@@ -39,9 +39,9 @@ exports.jobs = [
   },
   {
     "id": 3,
+    "email": "juba@vde.fr",
     "title": "Développeur Angular",
     "company": "SHT",
-    "email": "juba@vde.fr",
     "city": "Nantes",
     "zipcode": 44000,
     "description": "Steak Haché Technologie cherche son expert pas cher : chez nous, le minimum c'est déjà trop. Alors envoie ton CV et tes prétentions, mais surtout le CV.",
@@ -58,9 +58,9 @@ exports.jobs = [
   },
   {
     "id": 4,
+    "email": "user@vde.fr",
     "title": "Développeur Angular",
     "company": "Palindrome",
-    "email": "user@vde.fr",
     "city": "Laval",
     "zipcode": 53000,
     "description": "'Engage le jeu que je le gagne' : c'est ce que tu pourras déclarer si tu maîtrises React, Redux et Node. Si en plus tu sais réparer un 'radar nu' et que tu habites sur 'un roc cornu', le poste est fait pour toi. On a déménagé à Laval pour aller au bout de notre obsession. Pas de babyfoot chez nous : on fait ... du Kayak :)",

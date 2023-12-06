@@ -20,26 +20,59 @@ export class JobListComponent implements OnInit {
   constructor(private jobService: JobService) { }
 
   // Implémentez la méthode ngOnInit de l'interface OnInit
-  ngOnInit() {
-    this.jobService.getJobs()
-      .subscribe({
-        next: data => {
-          this.jobs = data;
-          // console.log('Data received:', data);
-        },
-        error: error => {
-          this.err = error;
-          // console.error('Observable emitted an error: ' + error)
-        }
-      });
 
-    this.jobService.JobsSubject
-      .subscribe({
-        next: data => {
-          // console.log(data);
-          this.jobs = [data, ...this.jobs];
-        }
-      })
+  ngOnInit() {
+    const jbbTokenString = localStorage.getItem('jbb-data');
+  
+    if (jbbTokenString !== null) {
+      const jbbToken = JSON.parse(jbbTokenString);
+  
+      this.jobService.getJobs(jbbToken.token)
+        .subscribe({
+          next: data => {
+            this.jobs = data;
+            // console.log('Data received:', data);
+          },
+          error: error => {
+            this.err = error;
+            // console.error('Observable emitted an error: ' + error)
+          }
+        });
+  
+      this.jobService.JobsSubject
+        .subscribe({
+          next: data => {
+            // console.log(data);
+            this.jobs = [data, ...this.jobs];
+          }
+        });
+    } else {
+      console.error("La clé 'jbb-data' n'a pas été trouvée dans le stockage local.");
+    }
   }
+  
+
+  // ngOnInit() {
+  //   this.jobService.getJobs()
+  //     .subscribe({
+  //       next: data => {
+  //         this.jobs = data;
+  //         // console.log('Data received:', data);
+  //       },
+  //       error: error => {
+  //         this.err = error;
+  //         // console.error('Observable emitted an error: ' + error)
+  //       }
+  //     });
+
+  //   this.jobService.JobsSubject
+  //     .subscribe({
+  //       next: data => {
+  //         // console.log(data);
+  //         this.jobs = [data, ...this.jobs];
+  //       }
+  //     })
+  // }
+
 }
 

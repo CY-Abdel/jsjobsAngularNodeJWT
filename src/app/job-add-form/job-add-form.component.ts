@@ -98,7 +98,6 @@ export class JobAddFormComponent implements OnInit {
 
         // Appeler le service avec le token
         this.jobService.addJob(jobData, token).subscribe();
-
       }
     }
     // vider le formulaire apres le post => reset()

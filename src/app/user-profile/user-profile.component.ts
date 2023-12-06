@@ -34,20 +34,61 @@ export class UserProfileComponent implements OnInit {
         }
 
         this.userEmail = this.decodeToken.email; // recupere le mail depuis le token
-        this.loadJobs(this.userEmail) // methode loadjobs
+
+        // Admin doit voir tous
+        if (this.isAdmin) {
+          this.loadJobsSansFiltre();
+        } else {
+          this.loadJobs(this.userEmail);
+        }
       } else {
         console.error("La clé 'jbb-data' n'a pas été trouvée dans le stockage local.");
       }
     }
+  }
+  
+  loadJobsSansFiltre() {
+    const jbbTokenString = localStorage.getItem('jbb-data');
+  
+    if (jbbTokenString !== null) {
+      const jbbToken = JSON.parse(jbbTokenString);
+  
+      this.jobService.getJobs(jbbToken.token)
+        .subscribe({
+          next: data => {
+            this.displayJobs(data);
+          },
+          error: error => {
+            console.error(error);
+          }
+        });
+    } else {
+      console.error("La clé 'jbb-data' n'a pas été trouvée dans le stockage local.");
+    }
+  }
+  displayJobs(data: any) {
+    console.log(data);
   }
 
   // elle appel la methode get jobs by email from jobServices
   loadJobs(userEmail: string) {
     this.jobService.getJobsByUserEmail(userEmail)
       .subscribe({
-        next : data => console.log('get jobs by emails data : ' ,data),
-        error: err => console.error(err)        
+        next: data => console.log('get jobs by emails data : ', data),
+        error: err => console.error(err)
       });
   }
+
+  // loadJobsSansFiltre() {
+  //   this.jobService.getJobs()
+  //     .subscribe({
+  //       next: data => {
+  //         this.displayJobs(data)
+  //       },
+  //       error: error => {
+  //         console.error(error)
+  //       }
+  //     });
+  // }
 
 }

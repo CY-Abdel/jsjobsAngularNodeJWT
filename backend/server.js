@@ -42,6 +42,7 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  // res.header('Access-Control-Allow-Headers', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   next();
 });
@@ -56,19 +57,25 @@ app.use('/auth', auth);  // localhost:4201/auth/login
 // middleware pour renforcer la sécurité coté backend (pas de securité frontend toujours en backend)
 const checkUserToken = (req, res, next) => {
   // Authorization : "Bearer azaeazeazeazeazeazeazeazeazeazeaze";
-  if (req.header('authorization')) {
+  if (!req.header('Authorization')) {
     return res.status(401).json({ success: false, message: "Header authorization manquant" });
   }
 
-  const tonkenParts = req.header('authorizaztion').split(' ');
+  const tonkenParts = req.header('Authorization').split(' ');
   let token = tonkenParts[1];
-  const decodedToken = jwt.verify(token, secretKey);
-  console.log('decodedToken ', decodedToken);
-  next();
+
+  jwt.verify(token, secretKey, (err, decodedToken) => {
+    if(err) {
+      return res.status(401).json({ success: false, message: "Token non valide"});      
+    } else {
+      console.log('decodedToken ', decodedToken);
+      next();
+    }
+  });
 };
 
 auth.post('/login', (req, res) => {
-  console.log('req.body : ', req.body);
+  // console.log('req.body : ', req.body);
   if (req.body) {
     const email = req.body.email.toLowerCase();
     const password = req.body.password.toLowerCase();
@@ -193,7 +200,7 @@ api.post('/jobs', (req, res) => {
   const job = req.body; // body middleware bodyParser
   addedJobs = [job, ...addedJobs];
   // console.log('nb total de job : ', addedJobs.length);
-  console.log('nb total de job : ', getAllJobs().length);
+  // console.log('nb total de job : ', getAllJobs().length);
   res.json(job);
 });
 
