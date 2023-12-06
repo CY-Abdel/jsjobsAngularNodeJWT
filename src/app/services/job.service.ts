@@ -19,17 +19,24 @@ export class JobService {
 
 
   // conecter back et front
-  BASE_URL = 'http://localhost:4201/';
+  BASE_URL = 'http://localhost:4201';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
   getJobs(): Observable<any> {
-    return this.http.get(this.BASE_URL + 'api/jobs ')
+    return this.http.get(this.BASE_URL + '/api/jobs ')
       .pipe(
         map((res: any) => {
           // console.log(res);
           return res;
         })
+      );
+  }
+
+  getJobsByUserEmail(userEmail : string) {
+    return this.http.get(this.BASE_URL + `/api/jobs/${userEmail}`)
+      .pipe(
+        map( res => { return res; })
       );
   }
 
@@ -41,7 +48,7 @@ export class JobService {
 
     const headers = this.authService.addAuthorizationHeader(token);
 
-    return this.http.post(this.BASE_URL + 'api/jobs', jobData, headers)
+    return this.http.post(this.BASE_URL + '/api/jobs', jobData, headers)
       .pipe(
         map((res) => {
           this.JobsSubject.next(jobData);
@@ -50,8 +57,9 @@ export class JobService {
       );
   }
 
+  // GetJob By Id
   getJob(id: number | string) {
-    return this.http.get(this.BASE_URL + `api/jobs/${id}`)
+    return this.http.get(this.BASE_URL + `/api/jobs/${id}`)
       .pipe(
         map((res: any) => {
           return res;

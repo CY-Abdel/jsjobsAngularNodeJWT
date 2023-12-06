@@ -1,6 +1,7 @@
 <div *ngIf="decodeToken">
+  <br><br>
   {{ decodeToken | json }}
-  <br>
+  <br><br>
   <pre>{{ decodeToken | json }}</pre>
   <!-- 
   /** La balise
@@ -17,10 +18,12 @@
 </div>
 
 <div *ngIf="isAdmin">
-  Je suis un Admin
+  <h2>Profil de {{ decodeToken.name }}</h2>
+  Je suis un Admin 
 </div>
 
 <div *ngIf="!isAdmin">
+  <h2>Profil de {{ decodeToken.name }}</h2>
   Je suis un simple User
 </div>
 

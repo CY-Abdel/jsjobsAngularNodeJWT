@@ -80,9 +80,9 @@ auth.post('/login', (req, res) => {
       let token = '';
 
       if (user.email === 'juba@vde.fr') {
-        token = jwt.sign({ iss: 'http://localhost:4201', email: req.body.email, role: 'admin' }, secretKey);
+        token = jwt.sign({ iss: 'http://localhost:4201', email: req.body.email, role: 'admin', name: user.name }, secretKey);
       } else {
-        token = jwt.sign({ iss: 'http://localhost:4201', email: req.body.email, role: 'user' }, secretKey);
+        token = jwt.sign({ iss: 'http://localhost:4201', email: req.body.email, role: 'user', name: user.name }, secretKey);
       }
 
       // res.json({ success: true, data: req.body });
@@ -122,6 +122,19 @@ api.get('/jobs', checkUserToken, (req, res) => {
   // res.json(data.jobs)
   res.json(getAllJobs())
 });
+
+// get jobs par email
+api.get('/jobs/:email', (req, res) => {
+  const email = req.params.email; // email is a string here
+
+  const jobs = getAllJobs().filter((job) => job.email === email);
+
+  res.json({
+    success: true,
+    jobs: jobs
+  })
+});
+
 
 // get one jobs
 api.get('/jobs/:id', (req, res) => {
