@@ -38,7 +38,7 @@ export class JobService {
   getJobsByUserEmail(userEmail: string) {
     return this.http.get(this.BASE_URL + `/api/jobs/${userEmail}`)
       .pipe(
-        map(res => { return res; })
+        map((res : any) => { return res; })
       );
   }
 

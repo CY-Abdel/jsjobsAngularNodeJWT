@@ -13,6 +13,8 @@ export class UserProfileComponent implements OnInit {
   isAdmin = false;
 
   userEmail = '';
+  jobs : any = [];
+  jobsTitle : string = "";
 
 
   constructor(private authService: AuthService, private jobService: JobService) { }
@@ -42,17 +44,26 @@ export class UserProfileComponent implements OnInit {
           this.loadJobs(this.userEmail);
         }
       } else {
-        console.error("La clé 'jbb-data' n'a pas été trouvée dans le stockage local.");
+        console.error("token 'jbb-data' n'a pas été trouvée dans le stockage local.");
       }
     }
   }
-  
+
+  // elle appel la methode get jobs by email from jobServices
+  loadJobs(userEmail: string) {
+    this.jobService.getJobsByUserEmail(userEmail)
+      .subscribe({
+        next: data => this.displayJobs(data.jobs),
+        error: err => console.error(err)
+      });
+  }
+
   loadJobsSansFiltre() {
     const jbbTokenString = localStorage.getItem('jbb-data');
-  
+
     if (jbbTokenString !== null) {
       const jbbToken = JSON.parse(jbbTokenString);
-  
+
       this.jobService.getJobs(jbbToken.token)
         .subscribe({
           next: data => {
@@ -63,22 +74,29 @@ export class UserProfileComponent implements OnInit {
           }
         });
     } else {
-      console.error("La clé 'jbb-data' n'a pas été trouvée dans le stockage local.");
+      console.error("token 'jbb-data' n'a pas été trouvée dans le stockage local.");
     }
   }
+
   displayJobs(data: any) {
     console.log(data);
+    this.jobs = data;
+
+    switch(this.jobs.length) {
+      case 0 :
+        this.jobsTitle = "Aucune annonce n'a été postée à ce jour";
+        return;
+      case 1 :
+        this.jobsTitle = "Una annonce postée";
+        return;
+      default : 
+        this.jobsTitle = `${this.jobs.length} annonces postées`;
+    }
   }
 
-  // elle appel la methode get jobs by email from jobServices
-  loadJobs(userEmail: string) {
-    this.jobService.getJobsByUserEmail(userEmail)
-      .subscribe({
-        next: data => console.log('get jobs by emails data : ', data),
-        error: err => console.error(err)
-      });
-  }
 
+
+  //*** ne marche pas car pas d'authentication */
   // loadJobsSansFiltre() {
   //   this.jobService.getJobs()
   //     .subscribe({

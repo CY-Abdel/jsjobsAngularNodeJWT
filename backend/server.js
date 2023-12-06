@@ -11,7 +11,8 @@ const auth = express.Router();
 
 let users = [
   { id: 1, email: 'juba@vde.fr', name: 'admin', password: 'juba', role: 'admin' },
-  { id: 2, email: 'user@vde.fr', name: 'user', password: 'user', role: 'user' }
+  { id: 2, email: 'user@vde.fr', name: 'user', password: 'user', role: 'user' },
+  { id: 3, email: 'user2@vde.fr', name: 'user', password: 'user2', role: 'user' }
 ];
 // const fakeUser = { id: 1, email: 'juba@vde.fr', name:'juba', password: 'juba' };
 // const fakeUser = { email: 'juba@vde.fr', password: 'juba' };
@@ -68,7 +69,7 @@ const checkUserToken = (req, res, next) => {
     if(err) {
       return res.status(401).json({ success: false, message: "Token non valide"});      
     } else {
-      console.log('decodedToken ', decodedToken);
+      // console.log('decodedToken ', decodedToken);
       next();
     }
   });
@@ -112,11 +113,11 @@ auth.post('/register', (req, res) => {
   if (req.body) {
     const email = req.body.email.toLocaleLowerCase().trim();
     const password = req.body.password.toLocaleLowerCase().trim();
-    // const name = req.body.name.trim();
-    // const name = req.body.name.trim();
+    const name = req.body.name.trim();
 
     // users = [{ id: Date.now(), email: email, name: name, password: password }, ...users];
-    users = [{ id: Date.now(), email: email, password: password }, ...users];
+    users = [{ id: Date.now(), email: email, password: password, name: name }, ...users];
+
     res.json({ success: true, users: users });
   } else {
     res.json({ success: false, message: 'la création a échoué' });
@@ -133,13 +134,13 @@ api.get('/jobs', checkUserToken, (req, res) => {
 // get jobs par email
 api.get('/jobs/:email', (req, res) => {
   const email = req.params.email; // email is a string here
-
+  // filter
   const jobs = getAllJobs().filter((job) => job.email === email);
-
+  //reponse
   res.json({
     success: true,
     jobs: jobs
-  })
+  });
 });
 
 

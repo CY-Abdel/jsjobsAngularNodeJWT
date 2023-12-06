@@ -39,7 +39,7 @@ exports.jobs = [
   },
   {
     "id": 3,
-    "email": "juba@vde.fr",
+    "email": "user2@vde.fr",
     "title": "Développeur Angular",
     "company": "SHT",
     "city": "Nantes",

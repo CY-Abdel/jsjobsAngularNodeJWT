@@ -19,6 +19,7 @@ import { SearchResultComponent } from './search-result/search-result.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { RegisterComponent } from './register/register.component';
+import { TruncatePipe } from './pipes/truncate.pipe';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { RegisterComponent } from './register/register.component';
     SearchResultComponent,
     AuthenticationComponent,
     RegisterComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    TruncatePipe
   ],
   imports: [
     BrowserModule,
